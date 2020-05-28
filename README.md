@@ -1,6 +1,6 @@
 # leaflet-challenge
 
-Using USGS earthquake data for the past week, create a map using Leaflet that plots earthquake in size and color; higher magnitudes have a darker color. Popups include specific data about each event.
+Using USGS earthquake data for the past week, create a map using Leaflet that plots earthquake in size and color and include popups for specific data about each event.
 
 FOLDERS/FILES
 
