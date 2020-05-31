@@ -19,7 +19,7 @@ function createFeatures(earthquakeData) {
       "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
   }
 
-  // magnitude - 100000 is too large - try 5000
+  // magnitude - 100000 is too large
   function radiusSize(magnitude) {
     return magnitude * 20000;
   }
