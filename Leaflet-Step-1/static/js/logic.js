@@ -1,21 +1,13 @@
 //Leaflet Homework Step 1 - Randy Dettmer 2020/05/28
 
-/*
-// Store our API endpoint inside queryUrl - from class excersize
-var queryUrl = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=" +
-  "2014-01-02&maxlongitude=-69.52148437&minlongitude=-123.83789062&maxlatitude=48.74894534&minlatitude=25.16517337";
- - above from class excersize
-*/
-
-// Store our API endpoint inside queryUrl
+// Store our API endpoint inside queryUrl - used to collect weekly earthquake data from USGS
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
-
 
 // Perform a GET request to the query URL
 d3.json(queryUrl, function(data) {
   // Once we get a response, send the data.features object to the createFeatures function
   createFeatures(data.features);
-  console.log(data.features);
+  //console.log(data.features);
 });
 
 function createFeatures(earthquakeData) {
@@ -27,9 +19,43 @@ function createFeatures(earthquakeData) {
       "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
   }
 
-  // Create a GeoJSON layer containing the features array on the earthquakeData object ------ need new tokens below
+  // magnitude - 100000 is too large - try 5000
+  function radiusSize(magnitude) {
+    return magnitude * 20000;
+  }
+
+  // circle color with magnitude - darker are higher magnitude
+  function circleColor(magnitude) {
+    if (magnitude < 1) {
+      return "#F7DC6F"
+    } 
+    else if (magnitude < 2) {
+      return "#F39C12"
+    } 
+    else if (magnitude < 3) {
+      return "#CA6F1E"
+    } 
+    else if (magnitude < 4) {
+      return "#B03A2E"
+    } 
+    else if (magnitude < 5) {
+      return "#581845"
+    } 
+    else {
+      return "#000000"
+    }
+  }
+
+  // Create a GeoJSON layer containing the features array on the earthquakeData object
   // Run the onEachFeature function once for each piece of data in the array
   var earthquakes = L.geoJSON(earthquakeData, {
+    pointToLayer: function(earthquakeData, latling) {
+      return L.circle(latling, {
+        radius: radiusSize(earthquakeData.properties.mag),
+        color: circleColor(earthquakeData.properties.mag),
+        fillOpacity: 0.5
+      });
+    },
     onEachFeature: onEachFeature
   });
 
@@ -39,45 +65,53 @@ function createFeatures(earthquakeData) {
 
 function createMap(earthquakes) {
 
-  // Define streetmap and darkmap layers
-  var streetmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+  // Define outdoors map
+  var outdoorsmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
     maxZoom: 18,
-    id: "mapbox.streets",
+    id: "outdoors-v11",
     accessToken: API_KEY
   });
-
-  var darkmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
-    attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-    maxZoom: 18,
-    id: "mapbox.dark",
-    accessToken: API_KEY
-  });
-
-  // Define a baseMaps object to hold our base layers
-  var baseMaps = {
-    "Street Map": streetmap,
-    "Dark Map": darkmap
-  };
-
-  // Create overlay object to hold our overlay layer
-  var overlayMaps = {
-    Earthquakes: earthquakes
-  };
 
   // Create our map, giving it the streetmap and earthquakes layers to display on load
   var myMap = L.map("map", {
     center: [
-      37.09, -95.71
+      38.6270, -90.1994
     ],
     zoom: 5,
-    layers: [streetmap, earthquakes]
+    layers: [outdoorsmap, earthquakes]
   });
 
-  // Create a layer control
-  // Pass in our baseMaps and overlayMaps
-  // Add the layer control to the map
-  L.control.layers(baseMaps, overlayMaps, {
-    collapsed: false
-  }).addTo(myMap);
-}
+  // color function for the earthquake magitude for the legend
+  function getColor(d) {
+    return d > 5 ? "#000000" :
+           d > 4 ? "#581845" :
+           d > 3 ? "#B03A2E" :
+           d > 2 ? "#CA6F1E" :
+           d > 1 ? "#F39C12" :
+                    "#F7DC6F";
+  }; 
+ 
+  // create legend
+  var legend = L.control({position: "bottomright"});
+
+  // layer control added, insert div with class legend
+  legend.onAdd = function(myMap) {
+    var div = L.DomUtil.create("div", "info legend"),
+      grades = [0, 1, 2, 3, 4, 5],
+      labels = [];  // not used can I delete?????
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+           '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+           grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
+    return div; 
+  };
+
+  // add legend to map
+  legend.addTo(myMap);
+
+  }
+//end of file
