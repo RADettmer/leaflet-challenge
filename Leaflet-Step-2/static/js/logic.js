@@ -20,12 +20,12 @@ function createFeatures(earthquakeData) {
       "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
   }
 
-  // magnitude - 100000 is too large
+  // Create magnitude radius of tremor - 100000 is too large
   function radiusSize(magnitude) {
     return magnitude * 20000;
   }
 
-  // circle color with magnitude - darker are higher magnitude
+  // Establish circle color for each magnitude - darker are more intense
   function circleColor(magnitude) {
     if (magnitude < 1) {
       return "#FAC9BA" // pink like
@@ -93,10 +93,10 @@ function createMap(earthquakes) {
   // Create fault line layer
   var faultline = new L.LayerGroup();
 
-  // Call fault line - tried direct link and received CORS' error, try raw
+  // Call fault line - tried direct link and received CORS' error, try raw and it works!
   var fault = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_plates.json"
 
-  // create fault lines and add to layer
+  // Create fault lines and add to layer
   d3.json(fault, function(data) {
     L.geoJSON(data, {
       style: function() {
@@ -127,7 +127,7 @@ function createMap(earthquakes) {
     layers: [satmap, earthquakes, faultline]
   });
 
-  // color function for the earthquake magitude for the legend
+  // Color function for the earthquake magitude legend
   function getColor(d) {
     return d > 5 ? "#900C3F" :
            d > 4 ? "#C70039" :
@@ -137,15 +137,15 @@ function createMap(earthquakes) {
                     "#FAC9BA";
   }; 
  
-  // create legend
+  // Create legend
   var legend = L.control({position: "bottomright"});
 
   // layer control added, insert div with class legend
   legend.onAdd = function(myMap) {
     var div = L.DomUtil.create("div", "info legend"),
       grades = [0, 1, 2, 3, 4, 5],
-      labels = [];  // not used can I delete?????
-
+      labels = [];
+      
     // loop through our density intervals and generate a label with a colored square for each interval
     for (var i = 0; i < grades.length; i++) {
         div.innerHTML +=
@@ -155,7 +155,7 @@ function createMap(earthquakes) {
     return div; 
   };
 
-  // add legend to map
+  // Add legend to map
   legend.addTo(myMap);
 
   // Create a layer control
@@ -166,4 +166,4 @@ function createMap(earthquakes) {
   }).addTo(myMap);
 
   }
-//end of file
+// End of file

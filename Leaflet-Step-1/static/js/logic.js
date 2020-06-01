@@ -24,7 +24,7 @@ function createFeatures(earthquakeData) {
     return magnitude * 20000;
   }
 
-  // circle color with magnitude - darker are higher magnitude
+  // Circle color for magnitude intensity - darker are higher magnitude
   function circleColor(magnitude) {
     if (magnitude < 1) {
       return "#F7DC6F"
@@ -42,7 +42,7 @@ function createFeatures(earthquakeData) {
       return "#581845"
     } 
     else {
-      return "#000000"
+      return "#000000" // black
     }
   }
 
