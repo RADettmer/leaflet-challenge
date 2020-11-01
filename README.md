@@ -2,9 +2,9 @@
 
 Using USGS earthquake data for the past week, create a map using Leaflet that plots earthquake in size and color and include popups for specific data about each event.
 
-FOLDERS/FILES
+## FOLDERS/FILES
 
-Leaflet-Step-1 - Basic Visualization
+### Leaflet-Step-1 - Basic Visualization
 Using USGS earthquake data for the past week, create a map using Leaflet that plots earthquake in size and color; higher magnitudes have a darker color. Popups include specific data about each event.
 
 1. index.html - basic html file
@@ -15,7 +15,7 @@ Using USGS earthquake data for the past week, create a map using Leaflet that pl
 		B - logic.js - code to generate maps
 
 
-Leaflet-Step-2 - Optional
+### Leaflet-Step-2 - Optional
 Using USGS earthquake data for the past week, create a map using Leaflet that plots earthquake in size and color; higher magnitudes have a darker color. Popups include specific data about each event. Add fault lines and layers that can be turned off and turned on.
 
 1. index.html - basic html file
