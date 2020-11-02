@@ -19,7 +19,7 @@ function createFeatures(earthquakeData) {
       "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
   }
 
-  // magnitude - 100000 is too large
+  // magnitude - 100000 is too large and covers screen
   function radiusSize(magnitude) {
     return magnitude * 20000;
   }
