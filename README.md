@@ -16,7 +16,7 @@ Using USGS earthquake data for the week of May 17, 2020, create a map using Leaf
 
 
 ### Leaflet-Step-2 - Optional
-Using USGS earthquake data for the past week, create a map using Leaflet that plots earthquake in size and color; higher magnitudes have a darker color. Popups include specific data about each event. Add fault lines and layers that can be turned off and turned on.
+Using USGS earthquake data for the week of May 17,2020, create a map using Leaflet that plots earthquake in size and color; higher magnitudes have a darker color. Popups include specific data about each event. Add fault lines and layers that can be turned off and turned on.
 
 1. index.html - basic html file
 2. static folder
