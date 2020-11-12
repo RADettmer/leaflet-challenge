@@ -1,5 +1,4 @@
 //Leaflet Homework Step 1 - Randy Dettmer 2020/05/28
-
 // Store our API endpoint inside queryUrl - used to collect weekly earthquake data from USGS
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
 
