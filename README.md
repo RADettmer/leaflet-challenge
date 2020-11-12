@@ -11,7 +11,7 @@ Using USGS earthquake data for the week of May 17, 2020, create a map using Leaf
 2. static folder
 	css folder - style.css - style for html elements
 	js folder
-		A - config.js - key for API
+		A - config.js - key for API (file is hidden with gitignore)
 		B - logic.js - code to generate maps
 
 
