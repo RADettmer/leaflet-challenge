@@ -1,6 +1,6 @@
 # Leaflet-Challenge
 
-Using USGS earthquake data for the week of May 17, 2020, create a map using Leaflet that plots earthquake in size and color and include popups for specific data about each event.
+Using USGS earthquake data for the week of May 17, 2020, create a map using Leaflet that plots earthquake in size and color and include popups for specific data about each event.  This data was extracted using an API.
 
 ## FOLDERS/FILES
 
