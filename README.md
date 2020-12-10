@@ -25,5 +25,5 @@ Using USGS earthquake data for the week of May 17,2020, create a map using Leafl
 		A - config.js - key for API (file is hidden with gitignore)
 		B - logic.js - code to generate maps
 
-### Screen Shot File - these files are currently missing . . . . .
+### Screen Shot File - these files are currently missing . . . need added
 This file is a screen shot of each of the two steps above.
